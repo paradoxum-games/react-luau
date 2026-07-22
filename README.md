@@ -131,12 +131,13 @@ also discovers the legacy `foreman.toml`, whose unavailable private tools preven
 plain root-level `rokit install`. `bin/bootstrap-tools.sh` isolates the public manifest
 from this repository's Foreman manifest without changing the legacy test workspace.
 The protected [Roblox runtime workflow](./.github/workflows/roblox-runtime.yml) uses
-Rocale 0.1.2 to run the exact unpublished nine-package consumer in fresh DEV and
-release sessions. It expects `ROCALE_API_KEY` as an environment secret and
-`ROCALE_PLACE_ID` plus `ROCALE_UNIVERSE_ID` as environment variables for a dedicated
-CI-only place. Each task verifies a unique marker embedded in that workflow run's
-artifact before it loads the packages. This is a package smoke, not full runtime
-parity.
+Rocale 0.1.2 to run the exact unpublished nine-package consumer in separate
+ReactTestRenderer and ReactRoblox/RoactCompat sessions for DEV and release. It
+expects `ROBLOX_API_KEY` and `WALLY_TOKEN` as secrets and `ROCALE_PLACE_ID` plus
+`ROCALE_UNIVERSE_ID` as variables for a dedicated CI-only place. Each task verifies a
+unique marker embedded in that workflow run's artifact before it loads the packages.
+The renderer sessions remain isolated because their reconciler host-config injection
+shares cached module state. This is a package smoke, not full runtime parity.
 
 Canonical parity remains blocked on authorized access to exact
 `DeveloperTools@0.2.3` and on trustworthy module-reset support: the source suite

@@ -102,14 +102,18 @@ jobs:
           ROCALE_PLACE_ID: ${{ vars.ROCALE_PLACE_ID }}
           ROCALE_UNIVERSE_ID: ${{ vars.ROCALE_UNIVERSE_ID }}
         run: |
-          rocale-cli run \
-            --load.place "$RUNNER_TEMP/react-luau-wally-consumer.rbxl" \
-            --script tests/wally-consumer/smoke.server.lua \
-            --universeId "$ROCALE_UNIVERSE_ID" \
-            --placeId "$ROCALE_PLACE_ID" \
-            --lua.globals "REACT_LUAU_SMOKE_EXPECTATION=dev:$REACT_LUAU_RUNTIME_MARKER" \
-            --timeout 120 \
-            -v
+          for renderer in test-renderer react-roblox; do
+            echo "::group::Run DEV $renderer smoke"
+            rocale-cli run \
+              --load.place "$RUNNER_TEMP/react-luau-wally-consumer.rbxl" \
+              --script tests/wally-consumer/smoke.server.lua \
+              --universeId "$ROCALE_UNIVERSE_ID" \
+              --placeId "$ROCALE_PLACE_ID" \
+              --lua.globals "REACT_LUAU_SMOKE_EXPECTATION=dev:$renderer:$REACT_LUAU_RUNTIME_MARKER" \
+              --timeout 120 \
+              -v
+            echo "::endgroup::"
+          done
 
       - name: Run release package smoke
         env:
@@ -117,11 +121,15 @@ jobs:
           ROCALE_PLACE_ID: ${{ vars.ROCALE_PLACE_ID }}
           ROCALE_UNIVERSE_ID: ${{ vars.ROCALE_UNIVERSE_ID }}
         run: |
-          rocale-cli run \
-            --load.place "$RUNNER_TEMP/react-luau-wally-consumer.rbxl" \
-            --script tests/wally-consumer/smoke.server.lua \
-            --universeId "$ROCALE_UNIVERSE_ID" \
-            --placeId "$ROCALE_PLACE_ID" \
-            --lua.globals "REACT_LUAU_SMOKE_EXPECTATION=release:$REACT_LUAU_RUNTIME_MARKER" \
-            --timeout 120 \
-            -v
+          for renderer in test-renderer react-roblox; do
+            echo "::group::Run release $renderer smoke"
+            rocale-cli run \
+              --load.place "$RUNNER_TEMP/react-luau-wally-consumer.rbxl" \
+              --script tests/wally-consumer/smoke.server.lua \
+              --universeId "$ROCALE_UNIVERSE_ID" \
+              --placeId "$ROCALE_PLACE_ID" \
+              --lua.globals "REACT_LUAU_SMOKE_EXPECTATION=release:$renderer:$REACT_LUAU_RUNTIME_MARKER" \
+              --timeout 120 \
+              -v
+            echo "::endgroup::"
+          done

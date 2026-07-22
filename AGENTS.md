@@ -128,9 +128,10 @@ organization secret rather than only on the `roblox-runtime` environment. Use a
 dedicated, read-only installation credential; future publishing must use a separate
 protected credential.
 The IDs must name a dedicated CI-only place that no person or other workflow uploads
-to. Each artifact embeds a unique run marker that both runtime tasks verify before
-loading the packages. The workflow executes fresh DEV and release tasks against the
-exact unpublished archives validated in the same job.
+to. Each artifact embeds a unique run marker that every runtime task verifies before
+loading the packages. The workflow executes isolated ReactTestRenderer and
+ReactRoblox/RoactCompat tasks in both DEV and release against the exact unpublished
+archives validated in the same job.
 
 The executable scripts under `bin` are the source of truth for command definitions.
 The historical workspace bootstrap, retained solely as a parity reference, is:
@@ -254,13 +255,16 @@ Treat the repository as transitional until the Wally workspace passes parity:
   separately.
 - Rocale 0.1.2 runs `.github/workflows/roblox-runtime.yml`. The protected job builds
   an exact unpublished-consumer place from the same nine archives it validates, then
-  executes fresh DEV and release smoke tasks. Keep the Roblox API key only in
+  executes separate ReactTestRenderer and ReactRoblox/RoactCompat smoke tasks in DEV
+  and release, for four fresh Rocale sessions. Keep the Roblox API key only in
   `secrets.ROBLOX_API_KEY`, the read-only registry credential only in
   `secrets.WALLY_TOKEN`, and `ROCALE_PLACE_ID` plus `ROCALE_UNIVERSE_ID` in
   variables. Reserve those IDs for this workflow alone. A unique per-run marker in the
   built place must match the value supplied to each task before package loading
-  begins. This is package runtime smoke, not source-suite, deferred, static-analysis,
-  benchmark, or legacy parity.
+  begins. Keep the two renderers isolated: the current reconciler injection mutates a
+  cached host-config module graph, so loading both in one VM creates an invalid hybrid
+  renderer. This is package runtime smoke, not source-suite, deferred,
+  static-analysis, benchmark, or legacy parity.
 - Do not execute the 109-suite source workspace under Rocale unless a hard preflight
   proves `debug.loadmodule` works. The reduced suite contains 109
   `jest.resetModules()` calls, legacy CI explicitly enables `EnableLoadModule`, and
@@ -288,10 +292,11 @@ Treat the repository as transitional until the Wally workspace passes parity:
   dedicated, reviewed change only after all release gates pass.
 - A local unpublished-consumer Rojo build validates structure but does not execute
   `tests/wally-consumer/smoke.server.lua`. The protected runtime workflow executes
-  that file explicitly in fresh DEV and release sessions so errors determine the
-  Rocale task result. It checks all nine exports, package version and singleton
-  identities, ReactTestRenderer behavior, and an actual ReactRoblox render/unmount
-  lifecycle. Treat that result as a package smoke only.
+  that file in separate ReactTestRenderer and ReactRoblox/RoactCompat sessions for
+  each mode so errors determine the Rocale task result. Across those isolated tasks it
+  checks all nine exports, package version and singleton identities,
+  ReactTestRenderer behavior, and an actual ReactRoblox render/unmount lifecycle.
+  Treat that result as a package smoke only.
 - Establish one repository release version before publishing. Pin internal React
   package dependencies to that exact lockstep version so a staged publish cannot
   resolve a mixed release.

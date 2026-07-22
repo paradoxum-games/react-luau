@@ -170,10 +170,12 @@ The public migration gates are intentionally separate:
   map, exact 109-suite inventory, Wally development lock, sourcemap, and Rojo build.
   It does not execute Jest.
 - The protected `.github/workflows/roblox-runtime.yml` job executes the exact
-  unpublished consumer smoke in fresh DEV and release Rocale sessions. Its place and
-  universe IDs must identify a dedicated CI-only place. A unique per-run marker is
-  embedded in the place and checked before package loading so another uploaded place
-  cannot produce a false green.
+  unpublished consumer smoke in separate ReactTestRenderer and
+  ReactRoblox/RoactCompat Rocale sessions for DEV and release. Renderer isolation is
+  required because reconciler host-config injection mutates a cached module graph.
+  Its place and universe IDs must identify a dedicated CI-only place. A unique
+  per-run marker is embedded in the place and checked before package loading so
+  another uploaded place cannot produce a false green.
 
 None is a substitute for the canonical suites. In particular, the source suite uses
 `jest.resetModules()` extensively. Do not run it under Rocale unless a preflight
