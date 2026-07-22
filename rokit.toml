@@ -8,7 +8,7 @@
 # replace them.
 
 [tools]
-rojo = "rojo-rbx/rojo@7.2.1"
+rojo = "rojo-rbx/rojo@7.7.0"
 selene = "Kampfkarren/selene@0.28.0"
 stylua = "JohnnyMorganz/StyLua@0.18.1"
 lute = "luau-lang/lute@0.1.0-nightly.20260307"
