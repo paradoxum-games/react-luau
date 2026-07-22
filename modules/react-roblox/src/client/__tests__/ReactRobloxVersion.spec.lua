@@ -21,8 +21,10 @@ local it = JestGlobals.it
 
 it("reports the downstream package family version", function()
 	local Shared = require(Packages.Shared)
+	local React = require(Packages.React)
 	local ReactRoblox = require(Packages.ReactRoblox)
 
 	jestExpect(Shared.ReactVersion).toBe("17.3.10")
+	jestExpect(React.version).toBe(Shared.ReactVersion)
 	jestExpect(ReactRoblox.version).toBe(Shared.ReactVersion)
 end)

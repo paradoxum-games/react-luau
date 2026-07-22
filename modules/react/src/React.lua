@@ -130,7 +130,7 @@ return {
 	createElement = createElement,
 	cloneElement = cloneElement,
 	isValidElement = ReactElement.isValidElement,
-	-- ROBLOX TODO: ReactVersion
+	version = SharedModule.ReactVersion,
 	__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals,
 	-- Deprecated behind disableCreateFactory
 	-- ROBLOX TODO: createFactory,
