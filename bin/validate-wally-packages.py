@@ -457,6 +457,8 @@ def assemble_consumer(
 	manifests: dict[str, dict],
 	archives: dict[str, Path],
 	working_directory: Path,
+	runtime_place_output: Path | None,
+	runtime_marker: str | None,
 ) -> None:
 	consumer = working_directory / "consumer"
 	shutil.copytree(
@@ -464,6 +466,11 @@ def assemble_consumer(
 		consumer,
 		ignore=shutil.ignore_patterns("Packages", ".staging", ".artifacts"),
 	)
+	if runtime_marker is not None:
+		(consumer / "runtime-marker.lua").write_text(
+			f"return {json.dumps(runtime_marker)}\n",
+			encoding="utf-8",
+		)
 	expected_lock = (CONSUMER_FIXTURE / "wally.lock").read_bytes()
 	run(["wally", "install", "--project-path", str(consumer)])
 	actual_lock = (consumer / "wally.lock").read_bytes()
@@ -530,7 +537,11 @@ def assemble_consumer(
 			raise ValidationError(f"Consumer alias has no target: {member['alias']}")
 
 	sourcemap = working_directory / "consumer-sourcemap.json"
-	model = working_directory / "consumer.rbxm"
+	artifact = (
+		runtime_place_output
+		if runtime_place_output is not None
+		else working_directory / "consumer.rbxm"
+	)
 	project = consumer / "default.project.json"
 	run(
 		[
@@ -547,10 +558,14 @@ def assemble_consumer(
 			"build",
 			str(project),
 			"--output",
-			str(model),
+			str(artifact),
 		],
 	)
+	if not artifact.is_file() or artifact.stat().st_size == 0:
+		raise ValidationError(f"Rojo did not create a nonempty artifact: {artifact}")
 	print("validated unpublished consumer install, sourcemap, and Rojo build")
+	if runtime_place_output is not None:
+		print(f"built exact unpublished consumer place: {runtime_place_output}")
 
 
 def main() -> int:
@@ -560,9 +575,51 @@ def main() -> int:
 		action="store_true",
 		help="validate package manifests and ZIPs without installing the consumer",
 	)
+	parser.add_argument(
+		"--runtime-place-output",
+		type=Path,
+		help=(
+			"build the validated unpublished consumer as a persistent .rbxl "
+			"for an external runtime entrypoint"
+		),
+	)
+	parser.add_argument(
+		"--runtime-marker",
+		help=(
+			"embed a unique non-secret marker in --runtime-place-output for "
+			"runtime identity attestation"
+		),
+	)
 	arguments = parser.parse_args()
 
 	try:
+		if arguments.packages_only and (
+			arguments.runtime_place_output is not None
+			or arguments.runtime_marker is not None
+		):
+			raise ValidationError(
+				"--packages-only cannot be combined with runtime artifact options"
+			)
+		runtime_place_output = arguments.runtime_place_output
+		runtime_marker = arguments.runtime_marker
+		if (runtime_place_output is None) != (runtime_marker is None):
+			raise ValidationError(
+				"--runtime-place-output and --runtime-marker must be used together"
+		)
+		if runtime_marker is not None and re.fullmatch(
+			r"[A-Za-z0-9._-]{1,160}", runtime_marker
+		) is None:
+			raise ValidationError(
+				"--runtime-marker must be 1-160 safe, non-secret characters"
+			)
+		if runtime_place_output is not None:
+			if not runtime_place_output.is_absolute():
+				runtime_place_output = REPOSITORY_ROOT / runtime_place_output
+			runtime_place_output = runtime_place_output.resolve()
+			if runtime_place_output.suffix.lower() != ".rbxl":
+				raise ValidationError("--runtime-place-output must end in .rbxl")
+			runtime_place_output.parent.mkdir(parents=True, exist_ok=True)
+
 		package_set, members, manifests = validate_manifests()
 		with tempfile.TemporaryDirectory(prefix="react-luau-wally-") as temp:
 			working_directory = Path(temp)
@@ -576,6 +633,8 @@ def main() -> int:
 					manifests,
 					archives,
 					working_directory,
+					runtime_place_output,
+					runtime_marker,
 				)
 	except (OSError, KeyError, ValueError, ValidationError, zipfile.BadZipFile) as error:
 		print(f"error: {error}", file=sys.stderr)

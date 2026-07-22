@@ -4,14 +4,11 @@
     "$className": "DataModel",
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
+      "RuntimeMarker": {
+        "$path": "runtime-marker.lua"
+      },
       "Packages": {
         "$path": "Packages"
-      }
-    },
-    "ServerScriptService": {
-      "$className": "ServerScriptService",
-      "Smoke": {
-        "$path": "smoke.server.lua"
       }
     }
   }

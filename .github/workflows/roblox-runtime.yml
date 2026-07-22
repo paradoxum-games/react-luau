@@ -1,0 +1,98 @@
+name: Roblox Runtime Smoke
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/roblox-runtime.yml"
+      - "bin/bootstrap-tools.sh"
+      - "bin/ci-wally-packages.sh"
+      - "bin/install-rokit.sh"
+      - "bin/validate-wally-packages.py"
+      - "modules/**"
+      - "multipack.toml"
+      - "rokit.toml"
+      - "tests/wally-consumer/**"
+      - "wally-package-set.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: react-luau-roblox-runtime
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    name: Wally consumer runtime smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: roblox-runtime
+    env:
+      REACT_LUAU_RUNTIME_MARKER: ${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install Python 3.11
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.11"
+
+      - name: Install Rokit 1.2.0
+        run: |
+          bash bin/install-rokit.sh
+          echo "$HOME/.rokit/bin" >> "$GITHUB_PATH"
+
+      - name: Install public Roblox tools
+        run: bash bin/bootstrap-tools.sh --no-trust-check
+
+      - name: Build exact unpublished consumer place
+        run: |
+          bash bin/ci-wally-packages.sh \
+            --runtime-place-output "$RUNNER_TEMP/react-luau-wally-consumer.rbxl" \
+            --runtime-marker "$REACT_LUAU_RUNTIME_MARKER"
+
+      - name: Verify protected credentials
+        env:
+          ROBLOX_API_KEY: ${{ secrets.ROCALE_API_KEY }}
+          ROCALE_PLACE_ID: ${{ vars.ROCALE_PLACE_ID }}
+          ROCALE_UNIVERSE_ID: ${{ vars.ROCALE_UNIVERSE_ID }}
+        run: |
+          set -euo pipefail
+          test -n "$ROBLOX_API_KEY"
+          [[ "$ROCALE_PLACE_ID" =~ ^[0-9]+$ ]]
+          [[ "$ROCALE_UNIVERSE_ID" =~ ^[0-9]+$ ]]
+
+      - name: Run DEV package smoke
+        env:
+          ROBLOX_API_KEY: ${{ secrets.ROCALE_API_KEY }}
+          ROCALE_PLACE_ID: ${{ vars.ROCALE_PLACE_ID }}
+          ROCALE_UNIVERSE_ID: ${{ vars.ROCALE_UNIVERSE_ID }}
+        run: |
+          rocale-cli run \
+            --load.place "$RUNNER_TEMP/react-luau-wally-consumer.rbxl" \
+            --script tests/wally-consumer/smoke.server.lua \
+            --universeId "$ROCALE_UNIVERSE_ID" \
+            --placeId "$ROCALE_PLACE_ID" \
+            --lua.globals "REACT_LUAU_SMOKE_EXPECTATION=dev:$REACT_LUAU_RUNTIME_MARKER" \
+            --timeout 120 \
+            -v
+
+      - name: Run release package smoke
+        env:
+          ROBLOX_API_KEY: ${{ secrets.ROCALE_API_KEY }}
+          ROCALE_PLACE_ID: ${{ vars.ROCALE_PLACE_ID }}
+          ROCALE_UNIVERSE_ID: ${{ vars.ROCALE_UNIVERSE_ID }}
+        run: |
+          rocale-cli run \
+            --load.place "$RUNNER_TEMP/react-luau-wally-consumer.rbxl" \
+            --script tests/wally-consumer/smoke.server.lua \
+            --universeId "$ROCALE_UNIVERSE_ID" \
+            --placeId "$ROCALE_PLACE_ID" \
+            --lua.globals "REACT_LUAU_SMOKE_EXPECTATION=release:$REACT_LUAU_RUNTIME_MARKER" \
+            --timeout 120 \
+            -v

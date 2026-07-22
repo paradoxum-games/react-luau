@@ -17,4 +17,4 @@ if [[ -z "$python_command" ]]; then
   exit 1
 fi
 
-"$python_command" bin/validate-wally-packages.py
+"$python_command" bin/validate-wally-packages.py "$@"
