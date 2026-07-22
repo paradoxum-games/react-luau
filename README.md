@@ -104,19 +104,46 @@ Coding agents automatically receive the repository-specific rules in
 [AGENTS.md](./AGENTS.md).
 
 The Wally package set is declared in [wally-package-set.toml](./wally-package-set.toml).
-Validate all nine real archives and a clean unpublished consumer without publishing:
+Install the public toolchain from the pinned Rokit manifest, then validate all nine
+real archives and a clean unpublished consumer without publishing:
 
 ```sh
+bash bin/bootstrap-tools.sh
 bash bin/ci-wally-packages.sh
+bash bin/ci-wally-workspace.sh
 ```
 
-This gate checks exact package identities and dependencies, archive contents, the
-committed consumer lockfile, Wally's `_Index` dependency layout, and a Rojo sourcemap
-and build.
+The package gate checks exact identities and dependencies, archive contents, the
+committed consumer lockfile, Wally's `_Index` layout, and a clean consumer build.
+The source-workspace gate maps the working source once, recreates package and
+development aliases with Wally's seven exact external dependencies, guards the
+explicit 109-suite inventory, and builds the resulting Rojo model. It validates
+layout only; it does not execute Jest.
+
+Build the documentation in its isolated Python environment with:
+
+```sh
+bash bin/docs.sh
+```
 
 `rokit.toml` declares the target public tool pins. During the transition, Rokit 1.2
-also discovers the legacy `foreman.toml`, whose private tools prevent a clean
-`rokit install`; keep using the existing test bootstrap until the workspace cutover.
+also discovers the legacy `foreman.toml`, whose unavailable private tools prevent a
+plain root-level `rokit install`. `bin/bootstrap-tools.sh` isolates the public manifest
+from this repository's Foreman manifest without changing the legacy test workspace.
+The protected [Roblox runtime workflow](./.github/workflows/roblox-runtime.yml) uses
+Rocale 0.1.2 to run the exact unpublished nine-package consumer in fresh DEV and
+release sessions. It expects `ROCALE_API_KEY` as an environment secret and
+`ROCALE_PLACE_ID` plus `ROCALE_UNIVERSE_ID` as environment variables for a dedicated
+CI-only place. Each task verifies a unique marker embedded in that workflow run's
+artifact before it loads the packages. This is a package smoke, not full runtime
+parity.
+
+Canonical parity remains blocked on authorized access to exact
+`DeveloperTools@0.2.3` and on trustworthy module-reset support: the source suite
+uses `jest.resetModules()`, while Rocale cannot enable the legacy `loadmodule`
+FastFlag path. See [AGENTS.md](./AGENTS.md) for the no-substitution and false-green
+guards. Rocale also does not replace legacy static-analysis, deferred, or benchmark
+coverage.
 
 ## License
 

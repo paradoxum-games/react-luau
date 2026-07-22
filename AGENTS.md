@@ -103,36 +103,66 @@ different answers would materially change the result.
 
 ## Verification
 
-Run commands from the repository root. During the transition, full runtime verification
-still requires `rotrieve`, `roblox-cli`, `robloxdev-cli`, Selene, StyLua, and Bash.
-Wally package verification additionally requires Python 3.11 or newer, Wally, and
-Rojo.
+Run commands from the repository root. The reproducible migration gates use Python
+3.11 or newer, Rokit 1.2.0, Wally, Rojo, Selene, StyLua, and Bash. The legacy
+full-runtime scripts still invoke Roblox-internal `rotrieve`, `roblox-cli`, and
+`robloxdev-cli`; the public Rokit manifest does not install them and their declared
+sources are unavailable externally. Retain those commands as historical parity
+targets, but do not add new dependencies on them.
+
+Install the public Rokit toolchain while avoiding this repository's legacy Foreman
+manifest:
+
+```sh
+bash bin/bootstrap-tools.sh
+```
+
+This bootstrap verifies Rokit 1.2.0 and provisions the public tools declared in
+`rokit.toml`. It does not make the Roblox-internal commands available. Rocale 0.1.2
+drives the protected Wally consumer smoke in
+`.github/workflows/roblox-runtime.yml`; it is not the full source Jest runner.
+That workflow requires `ROCALE_API_KEY` as an environment secret and
+`ROCALE_PLACE_ID` plus `ROCALE_UNIVERSE_ID` as environment variables. The IDs must
+name a dedicated CI-only place that no person or other workflow uploads to. Each
+artifact embeds a unique run marker that both runtime tasks verify before loading the
+packages. The workflow executes fresh DEV and release tasks against the exact
+unpublished archives validated in the same job.
 
 The executable scripts under `bin` are the source of truth for command definitions.
-Install workspace dependencies when `Packages` is missing or stale:
+The historical workspace bootstrap, retained solely as a parity reference, is:
 
 ```sh
 rotrieve install
 ```
 
-Fast static gates (quick reference):
+Roblox-internal analyzer parity reference:
 
 ```sh
 roblox-cli analyze --project tests.project.json
-selene --config selene.toml modules/ WorkspaceStatic/
-stylua -c modules bin WorkspaceStatic
 ```
 
-Canonical full verification (executable source of truth):
+Reproducible public static subset:
+
+```sh
+selene --config selene.toml modules/ WorkspaceStatic/
+selene --config selene.toml tests/wally-consumer/smoke.server.lua
+selene --config selene.toml tests/wally-workspace/dependency-proxy.lua
+stylua --check modules bin WorkspaceStatic \
+  tests/wally-consumer/smoke.server.lua \
+  tests/wally-workspace/dependency-proxy.lua
+```
+
+Legacy canonical full-verification reference (requires an authorized internal environment):
 
 ```sh
 bash bin/ci.sh
 ```
 
-Canonical Wally archive and unpublished-consumer verification:
+Canonical Wally archive, consumer, and source-workspace verification:
 
 ```sh
 bash bin/ci-wally-packages.sh
+bash bin/ci-wally-workspace.sh
 ```
 
 The default `bin/testing.sh` path is a local DEV loop, not full CI parity.
@@ -148,10 +178,10 @@ The default `bin/testing.sh` path is a local DEV loop, not full CI parity.
   python bin/compare-benchmarks.py <baseline.csv> <candidate.csv> --output <dir>
   ```
 - Public API, project-map, package, or release changes require the full suite plus
-  `bash bin/ci-wally-packages.sh` and any other affected manifest or consumer/build
-  validation.
+  `bash bin/ci-wally-packages.sh`, `bash bin/ci-wally-workspace.sh`, and any other
+  affected manifest or consumer/build validation.
 - Documentation or MkDocs navigation changes require local-link review,
-  `git diff --check`, and `python -m mkdocs build --strict` when MkDocs is available.
+  `git diff --check`, and `bash bin/docs.sh`.
 - Run `bash bin/testing.sh --snapshot` only with explicit user authorization, then
   review every snapshot diff.
 
@@ -196,7 +226,9 @@ The approved target is a Rokit-managed, Wally-published monorepo:
 - Rokit 1.2 discovers and combines `rokit.toml` with legacy `foreman.toml` files. While
   the Foreman manifest remains, its private Rotriever and `rbx-aged-cli` sources mean
   plain `rokit install` is not a clean bootstrap. Do not claim otherwise or remove the
-  legacy manifest before Wally test-workspace parity.
+  legacy manifest before Wally test-workspace parity. Use `bin/bootstrap-tools.sh` to
+  avoid this repository's Foreman manifest while provisioning the public pins. Rokit
+  can still discover user-home manifests; the secret-free CI job uses a clean runner.
 
 Treat the repository as transitional until the Wally workspace passes parity:
 
@@ -208,6 +240,32 @@ Treat the repository as transitional until the Wally workspace passes parity:
   deterministic Rojo/project-map compatibility layout that keeps local source under
   test and preserves existing package and dev aliases. Prefer that over mass-rewriting
   runtime imports.
+- Canonical DEV test discovery includes the ReactDevtoolsExtensions integration test,
+  which requires exact `DeveloperTools@0.2.3`. No exact package is present in the
+  Paradoxum Wally index or its configured public fallback; the legacy source requires
+  authorized Roblox access. This blocks Rotriever-independent test parity. Do not omit
+  the test, substitute another version, or call a reduced lane parity. Obtain and audit
+  an authorized exact artifact and map it as pinned local test-only input unless the
+  user separately authorizes seeding or publishing it. Handle any test-policy change
+  separately.
+- Rocale 0.1.2 runs `.github/workflows/roblox-runtime.yml`. The protected job builds
+  an exact unpublished-consumer place from the same nine archives it validates, then
+  executes fresh DEV and release smoke tasks. Keep the API key only in
+  `secrets.ROCALE_API_KEY`; keep `ROCALE_PLACE_ID` and `ROCALE_UNIVERSE_ID` in
+  environment variables, and reserve those IDs for this workflow alone. A unique
+  per-run marker in the built place must match the value supplied to each task before
+  package loading begins. This is package runtime smoke, not source-suite, deferred,
+  static-analysis, benchmark, or legacy parity.
+- Do not execute the 109-suite source workspace under Rocale unless a hard preflight
+  proves `debug.loadmodule` works. The reduced suite contains 109
+  `jest.resetModules()` calls, legacy CI explicitly enables `EnableLoadModule`, and
+  Rocale exposes no equivalent FastFlag option. Without trustworthy reloads, Jest
+  warns and falls back to ordinary `require`, so a green result can be false-isolated.
+- `.github/workflows/quality.yml` runs the public, secret-free package, source-layout,
+  formatting, lint, documentation, and whitespace gates.
+  `bin/ci-wally-workspace.sh` guards the 16-module compatibility map and exact
+  109-suite inventory but deliberately does not execute Jest. A green result remains
+  partial verification, not legacy runtime parity.
 - The Paradoxum registry or its configured fallback registries must resolve the exact
   runtime and development dependency graph. Verify actual resolution; do not infer it
   from an old lockfile or registry search.
@@ -220,10 +278,12 @@ Treat the repository as transitional until the Wally workspace passes parity:
 - Keep all nine package manifests `private = true` and every Multipack destination
   disabled during staging. An authorized release must unlock publication in a
   dedicated, reviewed change only after all release gates pass.
-- The unpublished consumer's Rojo build validates structure but does not execute
-  `tests/wally-consumer/smoke.server.lua`. Before unlocking publication or completing
-  the cutover, run that smoke in an engine-backed environment and record its singleton
-  identity and version assertions as passing.
+- A local unpublished-consumer Rojo build validates structure but does not execute
+  `tests/wally-consumer/smoke.server.lua`. The protected runtime workflow executes
+  that file explicitly in fresh DEV and release sessions so errors determine the
+  Rocale task result. It checks all nine exports, package version and singleton
+  identities, ReactTestRenderer behavior, and an actual ReactRoblox render/unmount
+  lifecycle. Treat that result as a package smoke only.
 - Establish one repository release version before publishing. Pin internal React
   package dependencies to that exact lockstep version so a staged publish cannot
   resolve a mixed release.
@@ -233,10 +293,11 @@ Treat the repository as transitional until the Wally workspace passes parity:
   development-only files, and must include its runtime source, project mapping,
   README, and MIT license. Run `bash bin/ci-wally-packages.sh` to review the actual ZIP
   contents for every member.
-- Commit and review every Wally lockfile. The current unpublished-consumer fixture
-  must resolve cleanly and match its committed lock. Before the final cutover, also
-  validate the source-based test workspace and its development lock; after an
-  authorized publish, validate the private-registry example consumer.
+- Commit and review every Wally lockfile. The unpublished-consumer fixture must
+  resolve cleanly and match its committed lock. Run `bash bin/ci-wally-workspace.sh`
+  to validate the source-based compatibility layout, exact suite inventory, and
+  development lock. After an authorized publish, validate the private-registry
+  example consumer.
 - Only after static analysis, DEV, release, deferred, and benchmark parity may the
   active scripts and documentation switch to Wally and the old Foreman, Rotriever,
   and legacy Multipack publication paths be removed.
@@ -246,5 +307,6 @@ Treat the repository as transitional until the Wally workspace passes parity:
 - Ledger is a useful convention reference, not a template to copy blindly. Regenerate
   locks after manifest identity or registry changes and verify actual package contents.
 
-Until that cutover is complete, use the current Rotriever commands in the Verification
-section above and report the migration as partial rather than complete.
+Until that cutover is complete, run the legacy Rotriever lanes only in an authorized
+environment where those tools exist. Otherwise, run the public gates, report legacy
+parity as unverified, and describe the migration as partial rather than complete.
