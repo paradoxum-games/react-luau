@@ -121,12 +121,16 @@ This bootstrap verifies Rokit 1.2.0 and provisions the public tools declared in
 `rokit.toml`. It does not make the Roblox-internal commands available. Rocale 0.1.2
 drives the protected Wally consumer smoke in
 `.github/workflows/roblox-runtime.yml`; it is not the full source Jest runner.
-That workflow requires `ROCALE_API_KEY` as an environment secret and
-`ROCALE_PLACE_ID` plus `ROCALE_UNIVERSE_ID` as environment variables. The IDs must
-name a dedicated CI-only place that no person or other workflow uploads to. Each
-artifact embeds a unique run marker that both runtime tasks verify before loading the
-packages. The workflow executes fresh DEV and release tasks against the exact
-unpublished archives validated in the same job.
+That workflow requires `WALLY_TOKEN` and `ROBLOX_API_KEY` as secrets and
+`ROCALE_PLACE_ID` plus `ROCALE_UNIVERSE_ID` as variables. The Quality workflow's
+authenticated Wally job also requires `WALLY_TOKEN`, so define it as a repository or
+organization secret rather than only on the `roblox-runtime` environment. Use a
+dedicated, read-only installation credential; future publishing must use a separate
+protected credential.
+The IDs must name a dedicated CI-only place that no person or other workflow uploads
+to. Each artifact embeds a unique run marker that both runtime tasks verify before
+loading the packages. The workflow executes fresh DEV and release tasks against the
+exact unpublished archives validated in the same job.
 
 The executable scripts under `bin` are the source of truth for command definitions.
 The historical workspace bootstrap, retained solely as a parity reference, is:
@@ -250,19 +254,23 @@ Treat the repository as transitional until the Wally workspace passes parity:
   separately.
 - Rocale 0.1.2 runs `.github/workflows/roblox-runtime.yml`. The protected job builds
   an exact unpublished-consumer place from the same nine archives it validates, then
-  executes fresh DEV and release smoke tasks. Keep the API key only in
-  `secrets.ROCALE_API_KEY`; keep `ROCALE_PLACE_ID` and `ROCALE_UNIVERSE_ID` in
-  environment variables, and reserve those IDs for this workflow alone. A unique
-  per-run marker in the built place must match the value supplied to each task before
-  package loading begins. This is package runtime smoke, not source-suite, deferred,
-  static-analysis, benchmark, or legacy parity.
+  executes fresh DEV and release smoke tasks. Keep the Roblox API key only in
+  `secrets.ROBLOX_API_KEY`, the read-only registry credential only in
+  `secrets.WALLY_TOKEN`, and `ROCALE_PLACE_ID` plus `ROCALE_UNIVERSE_ID` in
+  variables. Reserve those IDs for this workflow alone. A unique per-run marker in the
+  built place must match the value supplied to each task before package loading
+  begins. This is package runtime smoke, not source-suite, deferred, static-analysis,
+  benchmark, or legacy parity.
 - Do not execute the 109-suite source workspace under Rocale unless a hard preflight
   proves `debug.loadmodule` works. The reduced suite contains 109
   `jest.resetModules()` calls, legacy CI explicitly enables `EnableLoadModule`, and
   Rocale exposes no equivalent FastFlag option. Without trustworthy reloads, Jest
   warns and falls back to ordinary `require`, so a green result can be false-isolated.
-- `.github/workflows/quality.yml` runs the public, secret-free package, source-layout,
-  formatting, lint, documentation, and whitespace gates.
+- `.github/workflows/quality.yml` keeps formatting, lint, documentation, and
+  whitespace checks secret-free. Its package and source-layout gates authenticate
+  with `WALLY_TOKEN` on pushes, workflow dispatches, and same-repository
+  non-Dependabot pull requests. Fork and Dependabot pull requests skip the
+  authenticated job and therefore provide only partial verification.
   `bin/ci-wally-workspace.sh` guards the 16-module compatibility map and exact
   109-suite inventory but deliberately does not execute Jest. A green result remains
   partial verification, not legacy runtime parity.

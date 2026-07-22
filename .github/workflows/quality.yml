@@ -38,12 +38,6 @@ jobs:
       - name: Install public Roblox tools
         run: bash bin/bootstrap-tools.sh --no-trust-check
 
-      - name: Validate Wally package manifests
-        run: bash bin/ci-wally-packages.sh
-
-      - name: Validate Wally source workspace
-        run: bash bin/ci-wally-workspace.sh
-
       - name: Check Luau formatting
         run: |
           stylua --check modules bin WorkspaceStatic \
@@ -80,3 +74,65 @@ jobs:
           else
             git show --check --format= "$CURRENT_SHA"
           fi
+
+  wally:
+    name: Authenticated Wally checks
+    if: >-
+      github.event_name != 'pull_request' ||
+      (github.event.pull_request.head.repo.full_name == github.repository &&
+      github.actor != 'dependabot[bot]')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Install Python 3.11
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.11"
+
+      - name: Install Rokit 1.2.0
+        run: |
+          bash bin/install-rokit.sh
+          echo "$HOME/.rokit/bin" >> "$GITHUB_PATH"
+
+      - name: Install public Roblox tools
+        run: bash bin/bootstrap-tools.sh --no-trust-check
+
+      - name: Authenticate private Wally registry
+        env:
+          WALLY_TOKEN: ${{ secrets.WALLY_TOKEN }}
+        run: |
+          set -euo pipefail
+          umask 077
+          if [[ -z "${WALLY_TOKEN:-}" ]]; then
+            echo "::error::WALLY_TOKEN is required for the private Wally registry"
+            exit 1
+          fi
+          git config --global \
+            url."https://x-access-token:${WALLY_TOKEN}@github.com/".insteadOf \
+            "https://github.com/"
+          wally login \
+            --api "https://wally.paradoxum.cloud/" \
+            --token "$WALLY_TOKEN"
+
+      - name: Validate Wally package manifests
+        run: bash bin/ci-wally-packages.sh
+
+      - name: Validate Wally source workspace
+        run: bash bin/ci-wally-workspace.sh
+
+      - name: Remove Wally credentials
+        if: always()
+        env:
+          WALLY_TOKEN: ${{ secrets.WALLY_TOKEN }}
+        run: |
+          if [[ -z "${WALLY_TOKEN:-}" ]]; then
+            exit 0
+          fi
+          wally logout --project-path tests/wally-workspace || true
+          git config --global --unset-all \
+            url."https://x-access-token:${WALLY_TOKEN}@github.com/".insteadOf || true

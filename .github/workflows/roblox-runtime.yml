@@ -50,15 +50,44 @@ jobs:
       - name: Install public Roblox tools
         run: bash bin/bootstrap-tools.sh --no-trust-check
 
+      - name: Authenticate private Wally registry
+        env:
+          WALLY_TOKEN: ${{ secrets.WALLY_TOKEN }}
+        run: |
+          set -euo pipefail
+          umask 077
+          if [[ -z "${WALLY_TOKEN:-}" ]]; then
+            echo "::error::WALLY_TOKEN is required for the private Wally registry"
+            exit 1
+          fi
+          git config --global \
+            url."https://x-access-token:${WALLY_TOKEN}@github.com/".insteadOf \
+            "https://github.com/"
+          wally login \
+            --api "https://wally.paradoxum.cloud/" \
+            --token "$WALLY_TOKEN"
+
       - name: Build exact unpublished consumer place
         run: |
           bash bin/ci-wally-packages.sh \
             --runtime-place-output "$RUNNER_TEMP/react-luau-wally-consumer.rbxl" \
             --runtime-marker "$REACT_LUAU_RUNTIME_MARKER"
 
+      - name: Remove Wally credentials
+        if: always()
+        env:
+          WALLY_TOKEN: ${{ secrets.WALLY_TOKEN }}
+        run: |
+          if [[ -z "${WALLY_TOKEN:-}" ]]; then
+            exit 0
+          fi
+          wally logout --project-path tests/wally-consumer || true
+          git config --global --unset-all \
+            url."https://x-access-token:${WALLY_TOKEN}@github.com/".insteadOf || true
+
       - name: Verify protected credentials
         env:
-          ROBLOX_API_KEY: ${{ secrets.ROCALE_API_KEY }}
+          ROBLOX_API_KEY: ${{ secrets.ROBLOX_API_KEY }}
           ROCALE_PLACE_ID: ${{ vars.ROCALE_PLACE_ID }}
           ROCALE_UNIVERSE_ID: ${{ vars.ROCALE_UNIVERSE_ID }}
         run: |
@@ -69,7 +98,7 @@ jobs:
 
       - name: Run DEV package smoke
         env:
-          ROBLOX_API_KEY: ${{ secrets.ROCALE_API_KEY }}
+          ROBLOX_API_KEY: ${{ secrets.ROBLOX_API_KEY }}
           ROCALE_PLACE_ID: ${{ vars.ROCALE_PLACE_ID }}
           ROCALE_UNIVERSE_ID: ${{ vars.ROCALE_UNIVERSE_ID }}
         run: |
@@ -84,7 +113,7 @@ jobs:
 
       - name: Run release package smoke
         env:
-          ROBLOX_API_KEY: ${{ secrets.ROCALE_API_KEY }}
+          ROBLOX_API_KEY: ${{ secrets.ROBLOX_API_KEY }}
           ROCALE_PLACE_ID: ${{ vars.ROCALE_PLACE_ID }}
           ROCALE_UNIVERSE_ID: ${{ vars.ROCALE_UNIVERSE_ID }}
         run: |
