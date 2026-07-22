@@ -7,7 +7,7 @@ authors = ["Paradoxum Games", "Roblox <no-reply@roblox.com>"]
 realm = "shared"
 registry = "https://github.com/paradoxum-games/wally-index"
 repository = "https://github.com/paradoxum-games/react-luau"
-private = true
+private = false
 exclude = [
 	"rotriever.toml",
 	".robloxrc",
