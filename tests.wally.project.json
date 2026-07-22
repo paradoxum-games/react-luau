@@ -1,0 +1,528 @@
+{
+  "name": "RoactAlignment",
+  "tree": {
+    "$path": "tests/wally-workspace/Packages",
+    "_Workspace": {
+      "$path": "WorkspaceStatic",
+      "JestReact": {
+        "$className": "Folder",
+        "JestReact": {
+          "$path": "modules/jest-react/src"
+        },
+        "JestGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        }
+      },
+      "React": {
+        "$className": "Folder",
+        "React": {
+          "$path": "modules/react/src"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "JestReact": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Promise": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactCache": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactNoopRenderer": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactRoblox": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactTestRenderer": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Scheduler": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "ReactCache": {
+        "$className": "Folder",
+        "ReactCache": {
+          "$path": "modules/react-cache/src"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "React": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Scheduler": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "JestReact": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Promise": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactTestRenderer": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "ReactDebugTools": {
+        "$className": "Folder",
+        "ReactDebugTools": {
+          "$path": "modules/react-debug-tools/src"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactReconciler": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Promise": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "React": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactTestRenderer": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Scheduler": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "ReactDevtoolsShared": {
+        "$className": "Folder",
+        "ReactDevtoolsShared": {
+          "$path": "modules/react-devtools-shared/src"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "React": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactDebugTools": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactIs": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactReconciler": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactRoblox": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Promise": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactTestRenderer": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Scheduler": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "ReactGlobals": {
+        "$className": "Folder",
+        "ReactGlobals": {
+          "$path": "modules/react-globals/src"
+        },
+        "SafeFlags": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "ReactIs": {
+        "$className": "Folder",
+        "ReactIs": {
+          "$path": "modules/react-is/src"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "SafeFlags": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "LuauPolyfill": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Promise": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "React": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactRoblox": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "ReactNoopRenderer": {
+        "$className": "Folder",
+        "ReactNoopRenderer": {
+          "$path": "modules/react-noop-renderer/src"
+        },
+        "JestGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactReconciler": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Scheduler": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        }
+      },
+      "ReactReconciler": {
+        "$className": "Folder",
+        "ReactReconciler": {
+          "$path": "modules/react-reconciler/src"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Promise": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "React": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "SafeFlags": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Scheduler": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "JestReact": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactCache": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactDevtoolsShared": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactNoopRenderer": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactRoblox": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactTestRenderer": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "ReactRoblox": {
+        "$className": "Folder",
+        "ReactRoblox": {
+          "$path": "modules/react-roblox/src"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "React": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactReconciler": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Scheduler": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Promise": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "ReactShallowRenderer": {
+        "$className": "Folder",
+        "ReactShallowRenderer": {
+          "$path": "modules/react-shallow-renderer/src"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "React": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactIs": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "ReactTestRenderer": {
+        "$className": "Folder",
+        "ReactTestRenderer": {
+          "$path": "modules/react-test-renderer/src"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "React": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactReconciler": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Scheduler": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "JestReact": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Promise": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactRoblox": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "RoactCompat": {
+        "$className": "Folder",
+        "RoactCompat": {
+          "$path": "modules/roact-compat/src"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "React": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactRoblox": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Roact": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Scheduler": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "Scheduler": {
+        "$className": "Folder",
+        "Scheduler": {
+          "$path": "modules/scheduler/src"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "SafeFlags": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Shared": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "Shared": {
+        "$className": "Folder",
+        "Shared": {
+          "$path": "modules/shared/src"
+        },
+        "LuauPolyfill": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "ReactGlobals": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "SafeFlags": {
+          "$path": "tests/wally-workspace/dependency-proxy.lua"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "JestReact": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "React": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactNoop": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Scheduler": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      },
+      "TestRunner": {
+        "$className": "Folder",
+        "Src": {
+          "$path": "modules/TestRunner/src"
+        },
+        "Dev": {
+          "$className": "Folder",
+          "Jest": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "JestDiff": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "JestGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "JestReact": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "LuauPolyfill": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "ReactGlobals": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          },
+          "Scheduler": {
+            "$path": "tests/wally-workspace/dependency-proxy.lua"
+          }
+        }
+      }
+    }
+  }
+}

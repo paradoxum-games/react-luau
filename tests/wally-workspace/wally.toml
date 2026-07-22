@@ -1,0 +1,20 @@
+[package]
+name = "paradoxum/react-luau-test-workspace"
+description = "Private external dependencies for the React Luau source test workspace."
+version = "0.0.0"
+license = "MIT"
+authors = ["Paradoxum Games"]
+realm = "shared"
+registry = "https://github.com/paradoxum-games/wally-index"
+private = true
+
+# Local React modules are source-mapped by tests.wally.project.json. Adding the
+# unpublished paradoxum/* packages here would test duplicate or stale React copies.
+[dependencies]
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+Promise = "roblox/promise@=3.5.2"
+SafeFlags = "roblox/safe-flags@=0.1.2"
+Jest = "jsdotlua/jest@=3.10.0"
+JestGlobals = "jsdotlua/jest-globals@=3.10.0"
+JestDiff = "jsdotlua/jest-diff@=3.10.0"
+Roact = "roblox/roact@=1.4.0"

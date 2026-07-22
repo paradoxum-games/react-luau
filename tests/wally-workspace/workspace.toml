@@ -1,0 +1,97 @@
+[workspace]
+expected_suite_count = 109
+blocked_suite = "modules/react-devtools-extensions/src/__tests__/devtools-integration.roblox.spec.lua"
+nonsuite_test_module = "modules/react-reconciler/src/forks/ReactFiberHostConfig.test.lua"
+proxy_path = "tests/wally-workspace/dependency-proxy.lua"
+project_path = "tests.wally.project.json"
+
+# These are the nine packages approved for eventual publication. They remain local
+# source mappings in this workspace; Wally installs only external dependencies.
+published_modules = [
+  "ReactGlobals",
+  "Shared",
+  "React",
+  "Scheduler",
+  "ReactIs",
+  "ReactReconciler",
+  "ReactRoblox",
+  "ReactTestRenderer",
+  "RoactCompat",
+]
+
+support_modules = [
+  "JestReact",
+  "ReactCache",
+  "ReactDebugTools",
+  "ReactDevtoolsShared",
+  "ReactNoopRenderer",
+  "ReactShallowRenderer",
+  "TestRunner",
+]
+
+excluded_modules = [
+  "ExampleApp",
+  "ReactDevtools",
+  "ReactDevtoolsCore",
+  "ReactDevtoolsExtensions",
+  "ReactDevtoolsTimeline",
+  "ReactRefresh",
+  "ReactTelemetry",
+]
+
+# These dependencies exist only to run the source workspace. Every other external
+# dependency below must exactly match the runtime union in wally-package-set.toml.
+test_only_external_aliases = [
+  "Jest",
+  "JestGlobals",
+  "JestDiff",
+  "Roact",
+]
+
+[external_dependencies]
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+Promise = "roblox/promise@=3.5.2"
+SafeFlags = "roblox/safe-flags@=0.1.2"
+Jest = "jsdotlua/jest@=3.10.0"
+JestGlobals = "jsdotlua/jest-globals@=3.10.0"
+JestDiff = "jsdotlua/jest-diff@=3.10.0"
+Roact = "roblox/roact@=1.4.0"
+
+# Every Wally replacement is reviewed against the dependency declaration inherited
+# from the legacy Rotriever workspace or declared directly by an included module.
+[legacy_external_dependencies]
+LuauPolyfill = "github.com/roblox/luau-polyfill@1"
+Promise = "github.com/roblox/roblox-lua-promise@3.3.0"
+SafeFlags = "github.com/Roblox/safe-flags-internal@0.1.1"
+Jest = "github.com/roblox/jest-roblox@3"
+JestGlobals = "github.com/roblox/jest-roblox@3"
+JestDiff = "github.com/roblox/jest-roblox@3"
+Roact = "github.com/roblox/roact@1.4.0"
+
+[source_keys]
+TestRunner = "Src"
+
+[alias_targets]
+ReactNoop = "ReactNoopRenderer"
+
+[omitted_dev_dependencies]
+React = ["PerformanceBenchmarks"]
+
+[workspace.suite_counts]
+JestReact = 0
+React = 14
+ReactCache = 1
+ReactDebugTools = 3
+ReactDevtoolsShared = 12
+ReactGlobals = 0
+ReactIs = 1
+ReactNoopRenderer = 0
+ReactReconciler = 36
+ReactRoblox = 10
+ReactShallowRenderer = 2
+ReactTestRenderer = 6
+RoactCompat = 5
+Scheduler = 7
+Shared = 11
+TestRunner = 0
+WorkspaceStatic = 1
