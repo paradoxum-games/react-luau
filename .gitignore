@@ -14,6 +14,11 @@ roblox.toml
 **/luacov.*
 .idea/
 site/
+__pycache__/
+
+tests/wally-consumer/Packages/
+tests/wally-consumer/.staging/
+tests/wally-consumer/.artifacts/
 
 default_modules
 modules_*

@@ -1,5 +1,10 @@
 # Aligning files guide
 
+> **Historical workflow:** This guide documents the original Roblox alignment process
+> and its old repository, branch, converter, and React-version assumptions. It is not
+> the current maintenance policy for this fork. Use
+> [Maintaining the Paradoxum React Luau fork](maintainer-workflow.md) for new work.
+
 We are aligning files by going through them module by module. We keep track of them in a [Adapt roact-alignment implementation](https://github.com/Roblox/roact-alignment/milestone/1) milestone.
 
 ## Prerequisites

@@ -8,4 +8,6 @@
  ]]
 
 -- TODO: this is special because it gets imported during build.
-return "17.3.7"
+-- ROBLOX deviation START: PARADOXUM: report the downstream package family version
+return "17.3.10"
+-- ROBLOX deviation END

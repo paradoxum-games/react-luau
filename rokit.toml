@@ -1,0 +1,13 @@
+# Rokit is the target tool manager for the Paradoxum fork. Keep these versions
+# aligned with the active tools in foreman.toml during the transition; upgrade
+# tools separately from the package-manager migration.
+#
+# Rotriever cannot be installed by Rokit from its existing release. It remains
+# an external legacy prerequisite only until the Wally test workspace replaces it.
+
+[tools]
+rojo = "rojo-rbx/rojo@7.2.1"
+selene = "Kampfkarren/selene@0.28.0"
+stylua = "JohnnyMorganz/StyLua@0.18.1"
+lute = "luau-lang/lute@0.1.0-nightly.20260307"
+wally = "UpliftGames/wally@0.3.2"

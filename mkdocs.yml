@@ -1,7 +1,7 @@
 site_name: React Luau Documentation
 site_url: https://react-luau.dev/
-repo_name: Roblox/react-luau
-repo_url: https://github.com/Roblox/react-luau
+repo_name: paradoxum-games/react-luau
+repo_url: https://github.com/paradoxum-games/react-luau
 
 theme:
   name: material
@@ -27,6 +27,8 @@ nav:
   - Home: index.md
   - Deviations: deviations.md
   - Configuration: configuration.md
+  - Maintainers:
+      - Maintaining the Fork: maintainer-workflow.md
   - Migrating From 1.x:
       - Minimum Requirements: migrating-from-1x/minimum-requirements.md
       - Add Roact 17 Dependency: migrating-from-1x/upgrading-to-roact-17.md

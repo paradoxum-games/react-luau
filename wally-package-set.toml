@@ -1,0 +1,102 @@
+[package_set]
+version = "17.3.10"
+registry = "https://github.com/paradoxum-games/wally-index"
+repository = "https://github.com/paradoxum-games/react-luau"
+authors = ["Paradoxum Games", "Roblox <no-reply@roblox.com>"]
+private = true
+license_file = "LICENSE"
+
+# Members are ordered topologically for eventual publication. Publishing remains a
+# separately authorized action; this file only defines and validates the package set.
+
+[[members]]
+path = "modules/react-globals"
+name = "paradoxum/react-globals"
+alias = "ReactGlobals"
+[members.dependencies]
+SafeFlags = "roblox/safe-flags@=0.1.2"
+
+[[members]]
+path = "modules/shared"
+name = "paradoxum/react-shared"
+alias = "Shared"
+[members.dependencies]
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+SafeFlags = "roblox/safe-flags@=0.1.2"
+ReactGlobals = "paradoxum/react-globals@=17.3.10"
+
+[[members]]
+path = "modules/react"
+name = "paradoxum/react"
+alias = "React"
+[members.dependencies]
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+ReactGlobals = "paradoxum/react-globals@=17.3.10"
+Shared = "paradoxum/react-shared@=17.3.10"
+
+[[members]]
+path = "modules/scheduler"
+name = "paradoxum/react-scheduler"
+alias = "Scheduler"
+[members.dependencies]
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+SafeFlags = "roblox/safe-flags@=0.1.2"
+ReactGlobals = "paradoxum/react-globals@=17.3.10"
+Shared = "paradoxum/react-shared@=17.3.10"
+
+[[members]]
+path = "modules/react-is"
+name = "paradoxum/react-is"
+alias = "ReactIs"
+[members.dependencies]
+ReactGlobals = "paradoxum/react-globals@=17.3.10"
+SafeFlags = "roblox/safe-flags@=0.1.2"
+Shared = "paradoxum/react-shared@=17.3.10"
+
+[[members]]
+path = "modules/react-reconciler"
+name = "paradoxum/react-reconciler"
+alias = "ReactReconciler"
+[members.dependencies]
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+Promise = "roblox/promise@=3.5.2"
+SafeFlags = "roblox/safe-flags@=0.1.2"
+ReactGlobals = "paradoxum/react-globals@=17.3.10"
+Scheduler = "paradoxum/react-scheduler@=17.3.10"
+Shared = "paradoxum/react-shared@=17.3.10"
+React = "paradoxum/react@=17.3.10"
+
+[[members]]
+path = "modules/react-roblox"
+name = "paradoxum/react-roblox"
+alias = "ReactRoblox"
+[members.dependencies]
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+Shared = "paradoxum/react-shared@=17.3.10"
+React = "paradoxum/react@=17.3.10"
+ReactGlobals = "paradoxum/react-globals@=17.3.10"
+ReactReconciler = "paradoxum/react-reconciler@=17.3.10"
+Scheduler = "paradoxum/react-scheduler@=17.3.10"
+
+[[members]]
+path = "modules/react-test-renderer"
+name = "paradoxum/react-test-renderer"
+alias = "ReactTestRenderer"
+[members.dependencies]
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+React = "paradoxum/react@=17.3.10"
+ReactGlobals = "paradoxum/react-globals@=17.3.10"
+ReactReconciler = "paradoxum/react-reconciler@=17.3.10"
+Scheduler = "paradoxum/react-scheduler@=17.3.10"
+Shared = "paradoxum/react-shared@=17.3.10"
+
+[[members]]
+path = "modules/roact-compat"
+name = "paradoxum/roact-compat"
+alias = "RoactCompat"
+[members.dependencies]
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+React = "paradoxum/react@=17.3.10"
+ReactGlobals = "paradoxum/react-globals@=17.3.10"
+ReactRoblox = "paradoxum/react-roblox@=17.3.10"
+Shared = "paradoxum/react-shared@=17.3.10"

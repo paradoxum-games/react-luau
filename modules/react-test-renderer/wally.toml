@@ -1,18 +1,28 @@
 [package]
-name = "roblox/react-test-renderer"
+name = "paradoxum/react-test-renderer"
 description = "A React renderer that outputs a JSON-serializable tree, used for testing React Luau components."
-version = "17.3.9"
+version = "17.3.10"
 license = "MIT"
-authors = ["Roblox <no-reply@roblox.com>"]
+authors = ["Paradoxum Games", "Roblox <no-reply@roblox.com>"]
 realm = "shared"
-registry = "https://github.com/UpliftGames/wally-index"
-repository = "https://github.com/Roblox/react-lua"
-exclude = ["rotriever.toml"]
+registry = "https://github.com/paradoxum-games/wally-index"
+repository = "https://github.com/paradoxum-games/react-luau"
+private = true
+exclude = [
+	"rotriever.toml",
+	".robloxrc",
+	"src/**/__tests__",
+	"src/**/__tests__/**",
+	"src/**/__snapshots__",
+	"src/**/__snapshots__/**",
+	"src/**/*.spec.lua",
+	"src/**/*.test.lua",
+]
 
 [dependencies]
-LuauPolyfill = "roblox/luau-polyfill@^1.2.5"
-React = "roblox/react@^17"
-ReactGlobals = "roblox/react-globals@^17"
-ReactReconciler = "roblox/react-reconciler@^17"
-Scheduler = "roblox/react-scheduler@^17"
-Shared = "roblox/react-shared@^17"
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+React = "paradoxum/react@=17.3.10"
+ReactGlobals = "paradoxum/react-globals@=17.3.10"
+ReactReconciler = "paradoxum/react-reconciler@=17.3.10"
+Scheduler = "paradoxum/react-scheduler@=17.3.10"
+Shared = "paradoxum/react-shared@=17.3.10"

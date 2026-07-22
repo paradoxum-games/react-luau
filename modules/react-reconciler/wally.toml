@@ -1,19 +1,29 @@
 [package]
-name = "roblox/react-reconciler"
-description = "The React reconciler — the renderer-agnostic core that powers React Luau renderers."
-version = "17.3.9"
+name = "paradoxum/react-reconciler"
+description = "The React reconciler - the renderer-agnostic core that powers React Luau renderers."
+version = "17.3.10"
 license = "MIT"
-authors = ["Roblox <no-reply@roblox.com>"]
+authors = ["Paradoxum Games", "Roblox <no-reply@roblox.com>"]
 realm = "shared"
-registry = "https://github.com/UpliftGames/wally-index"
-repository = "https://github.com/Roblox/react-lua"
-exclude = ["rotriever.toml"]
+registry = "https://github.com/paradoxum-games/wally-index"
+repository = "https://github.com/paradoxum-games/react-luau"
+private = true
+exclude = [
+	"rotriever.toml",
+	".robloxrc",
+	"src/**/__tests__",
+	"src/**/__tests__/**",
+	"src/**/__snapshots__",
+	"src/**/__snapshots__/**",
+	"src/**/*.spec.lua",
+	"src/**/*.test.lua",
+]
 
 [dependencies]
-LuauPolyfill = "roblox/luau-polyfill@^1.2.5"
-Promise = "roblox/promise@^3.5.2"
-SafeFlags = "roblox/safe-flags@^0.1.2"
-ReactGlobals = "roblox/react-globals@^17"
-Scheduler = "roblox/react-scheduler@^17"
-Shared = "roblox/react-shared@^17"
-React = "roblox/react@^17"
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+Promise = "roblox/promise@=3.5.2"
+SafeFlags = "roblox/safe-flags@=0.1.2"
+ReactGlobals = "paradoxum/react-globals@=17.3.10"
+Scheduler = "paradoxum/react-scheduler@=17.3.10"
+Shared = "paradoxum/react-shared@=17.3.10"
+React = "paradoxum/react@=17.3.10"

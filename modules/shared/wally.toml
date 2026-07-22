@@ -1,15 +1,25 @@
 [package]
-name = "roblox/react-shared"
+name = "paradoxum/react-shared"
 description = "Internal shared utilities used across React Luau packages."
-version = "17.3.9"
+version = "17.3.10"
 license = "MIT"
-authors = ["Roblox <no-reply@roblox.com>"]
+authors = ["Paradoxum Games", "Roblox <no-reply@roblox.com>"]
 realm = "shared"
-registry = "https://github.com/UpliftGames/wally-index"
-repository = "https://github.com/Roblox/react-lua"
-exclude = ["rotriever.toml"]
+registry = "https://github.com/paradoxum-games/wally-index"
+repository = "https://github.com/paradoxum-games/react-luau"
+private = true
+exclude = [
+	"rotriever.toml",
+	".robloxrc",
+	"src/**/__tests__",
+	"src/**/__tests__/**",
+	"src/**/__snapshots__",
+	"src/**/__snapshots__/**",
+	"src/**/*.spec.lua",
+	"src/**/*.test.lua",
+]
 
 [dependencies]
-LuauPolyfill = "roblox/luau-polyfill@^1.2.5"
-SafeFlags = "roblox/safe-flags@^0.1.2"
-ReactGlobals = "roblox/react-globals@^17"
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+SafeFlags = "roblox/safe-flags@=0.1.2"
+ReactGlobals = "paradoxum/react-globals@=17.3.10"

@@ -1,0 +1,16 @@
+[package]
+# Wally installs only the external runtime dependencies here. The validator
+# overlays the nine unpublished local archives using Wally's real _Index layout.
+name = "paradoxum/react-luau-wally-consumer"
+description = "Unpublished artifact consumer for the Paradoxum React Luau package family."
+version = "0.0.0"
+license = "MIT"
+authors = ["Paradoxum Games"]
+realm = "shared"
+registry = "https://github.com/paradoxum-games/wally-index"
+private = true
+
+[dependencies]
+LuauPolyfill = "jsdotlua/luau-polyfill@=1.2.7"
+Promise = "roblox/promise@=3.5.2"
+SafeFlags = "roblox/safe-flags@=0.1.2"

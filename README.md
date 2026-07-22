@@ -21,16 +21,23 @@
 
 <div align="center">
 
-[![Get it on Creator Store](./.github/assets/link-creator-store.svg)](https://create.roblox.com/store/asset/15621638430)
-[![Wally (external link)](./.github/assets/link-wally.svg)](https://wally.run/package/roblox/react)
-
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/roblox/react-lua/blob/main/LICENSE)
-[![Tests](https://github.com/Roblox/roact-alignment/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/Roblox/roact-alignment/actions/workflows/test.yml) 
-[![Coverage Status](https://coveralls.io/repos/github/Roblox/roact-alignment/badge.svg?branch=master&t=TvTSze)](https://coveralls.io/github/Roblox/roact-alignment?branch=master)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 </div>
 
 React Luau is a declarative library for building user interfaces. It's a highly-tuned translation of ReactJS and currently based on React 17.
+
+> [!NOTE]
+> This repository is maintained by Paradoxum Games as an independent downstream fork
+> of Roblox React Luau. Upstream projects remain important semantic and historical
+> references, but changes here may intentionally diverge to serve this fork.
+
+> [!IMPORTANT]
+> The `paradoxum/*` Wally package family is staged and validated in this repository,
+> but it has not been published. The existing Rotriever workspace still drives the
+> runtime test suite until Wally workspace parity is complete. Do not use the legacy
+> `roblox/react` package as if it were this fork. Staged package manifests are private,
+> and all Multipack publication destinations are disabled.
 
 * **Declarative:** React makes it easy to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes. Declarative views make your code more predictable, simpler to understand, and easier to debug.
 * **Component-Based:** Build encapsulated components that manage their own state, then compose them to make complex UIs. Since component logic is written in Luau instead of managed with Roblox's Instances, you can easily pass rich data through your code and keep the state out of the data model.
@@ -90,8 +97,27 @@ root:render(ReactRoblox.createPortal(e(App), Players.LocalPlayer.PlayerGui))
 
 This example will render "Hello, Taylor!" into a TextLabel on the screen.
 
-<!-- ## Contributing -->
+## Development
 
-### License
+Start with [Maintaining the Paradoxum React Luau fork](./docs/maintainer-workflow.md).
+Coding agents automatically receive the repository-specific rules in
+[AGENTS.md](./AGENTS.md).
+
+The Wally package set is declared in [wally-package-set.toml](./wally-package-set.toml).
+Validate all nine real archives and a clean unpublished consumer without publishing:
+
+```sh
+bash bin/ci-wally-packages.sh
+```
+
+This gate checks exact package identities and dependencies, archive contents, the
+committed consumer lockfile, Wally's `_Index` dependency layout, and a Rojo sourcemap
+and build.
+
+`rokit.toml` declares the target public tool pins. During the transition, Rokit 1.2
+also discovers the legacy `foreman.toml`, whose private tools prevent a clean
+`rokit install`; keep using the existing test bootstrap until the workspace cutover.
+
+## License
 
 React Luau is [MIT licensed](./LICENSE). Go do cool stuff with it!
