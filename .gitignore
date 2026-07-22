@@ -15,10 +15,13 @@ roblox.toml
 .idea/
 site/
 __pycache__/
+/.venv/
 
 tests/wally-consumer/Packages/
 tests/wally-consumer/.staging/
 tests/wally-consumer/.artifacts/
+tests/wally-workspace/Packages/
+tests/wally-workspace/DevPackages/
 
 default_modules
 modules_*

@@ -8,22 +8,22 @@ The `RoactCompat` package is designed to have the same interface as [legacy Roac
 	`RoactCompat` is **not** compatible with legacy Roact in any way. It should be used only as a drop-in replacement for legacy Roact, for the purposes of upgrading existing projects written for legacy Roact.
 
 ## RoactCompat.Component
-Re-exports [React.Component](react.md#ReactComponent).
+Re-exports [React.Component](react.md#reactcomponent).
 
 ## RoactCompat.PureComponent
-Re-exports [React.PureComponent](react.md#ReactPureComponent).
+Re-exports [React.PureComponent](react.md#reactpurecomponent).
 
 ## RoactCompat.createElement
-Re-exports [React.createElement](react.md#ReactcreateElement).
+Re-exports [React.createElement](react.md#reactcreateelement).
 
 ## RoactCompat.createContext
-Re-exports [React.createContext](react.md#ReactcreateContext).
+Re-exports [React.createContext](react.md#reactcreatecontext).
 
 ## RoactCompat.createRef
-Re-exports [React.createRef](react.md#ReactcreateRef).
+Re-exports [React.createRef](react.md#reactcreateref).
 
 ## RoactCompat.forwardRef
-Re-exports [React.forwardRef](react.md#ReactforwardRef).
+Re-exports [React.forwardRef](react.md#reactforwardref).
 
 ## RoactCompat.mount
 
@@ -38,10 +38,10 @@ Compatibility method mimicking [legacy `Roact.mount`](https://roblox.github.io/r
 
 For all intents and purposes, this should function equivalently to legacy Roact's `mount` function. Under the hood, RoactCompat takes the following steps:
 
-1. Creates a root using [`React.createRoot`](react.md#reactcreateroot)
-	* When `_G.__ROACT_17_COMPAT_LEGACY_ROOT__` is enabled, this will use [`React.createLegacyRoot`](react.md#reactcreatelegacyroot) instead
+1. Creates a root using [`ReactRoblox.createRoot`](react-roblox.md#reactrobloxcreateroot)
+	* When `_G.__ROACT_17_COMPAT_LEGACY_ROOT__` is enabled, this will use [`ReactRoblox.createLegacyRoot`](react-roblox.md#reactrobloxcreatelegacyroot) instead
 2. Calls `root:render` with the provided element
-	* React's roots take complete control of the provided container, deleting all existing children. Legacy Roact does not tamper with existing children of the provided container. To mimic the legacy behavior, we use a [`Portal`](react.md#reactcreateportal) to mount into the container instead of providing it directly to the root.
+	* React's roots take complete control of the provided container, deleting all existing children. Legacy Roact does not tamper with existing children of the provided container. To mimic the legacy behavior, we use [`ReactRoblox.createPortal`](react-roblox.md#reactrobloxcreateportal) to mount into the container instead of providing it directly to the root.
 	* When `_G.__ROACT_17_INLINE_ACT__` is enabled, the `render` call is automatically wrapped in [`ReactRoblox.act`](react-roblox.md#reactrobloxact) to ensure that mounting behavior resolves synchronously in tests.
 3. Returns an opaque handle to the root that can be used with [`RoactCompat.update`](#roactcompatupdate) and [`RoactCompat.unmount`](#roactcompatunmount)
 
@@ -90,7 +90,7 @@ Compatibility method mimicking [`Roact.setGlobalConfig`](https://roblox.github.i
 
 ## RoactCompat.Portal
 
-Compatibility component mimicking [`Roact.Portal`](https://roblox.github.io/roact/api-reference/#roactportal). Uses the [React.createPortal](react.md#reactcreateportal) function under the hood.
+Compatibility component mimicking [`Roact.Portal`](https://roblox.github.io/roact/api-reference/#roactportal). Uses the [ReactRoblox.createPortal](react-roblox.md#reactrobloxcreateportal) function under the hood.
 
 ## RoactCompat.Ref
 
@@ -142,10 +142,10 @@ Re-exports [React.Event](react.md#reactevent).
 Re-exports [React.Change](react.md#reactchange).
 
 ## RoactCompat.createBinding
-Re-exports [ReactRoblox.createBinding](react.md#reactcreatebinding).
+Re-exports [React.createBinding](react.md#reactcreatebinding).
 
 ## RoactCompat.joinBindings
-Re-exports [ReactRoblox.joinBindings](react.md#reactjoinbindings).
+Re-exports [React.joinBindings](react.md#reactjoinbindings).
 
 ## RoactCompat.act
 Re-exports [ReactRoblox.act](react-roblox.md#reactrobloxact).

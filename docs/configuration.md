@@ -38,13 +38,13 @@ Occasionally, some older projects will issue more warnings in Dev Mode than can 
 	Typically, this is only necessary in tests that are strict about reducing warning output. In general, prefer the full-featured Dev Mode.
 
 ### \_\_COMPAT_WARNINGS\_\_
-Enables compatibility warnings for any uses of outdated APIs in your code. These compatibility mismatches should have no effect on behavior, but can be modernized to better align to standards and anticipate future releases. Compat warnings will help you surface uses of outdated APIs when you [migrate from Roact 1.x](migrating-from-roact-1x.md/#updating-conventions-and-apis).
+Enables compatibility warnings for any uses of outdated APIs in your code. These compatibility mismatches should have no effect on behavior, but can be modernized to better align to standards and anticipate future releases. Compat warnings will help you surface uses of outdated APIs when you [migrate from Roact 1.x](migrating-from-1x/convert-legacy-conventions.md#updating-conventions-and-apis).
 
 
 ### \_\_ROACT_17_MOCK_SCHEDULER\_\_
 Ensure that Roact's internal scheduler is mocked instead of using real async logic like `task.delay`. This is useful in conjunction with [the `act` function](api-reference/react-roblox.md#reactrobloxact) to test concurrent behavior via the "arrange-act-assert" pattern.
 
-Use this global in test configuration to make sure that you're not inadvertently relying on asynchronous logic in tests. Since Roact 17 uses concurrent rendering by default, you will always need this global to be set to `true` (except when using the [`__ROACT_17_COMPAT_LEGACY_ROOT__`](#ROACT17COMPATLEGACYROOT) global described below).
+Use this global in test configuration to make sure that you're not inadvertently relying on asynchronous logic in tests. Since Roact 17 uses concurrent rendering by default, you will always need this global to be set to `true` (except when using the [`__ROACT_17_COMPAT_LEGACY_ROOT__`](#__roact_17_compat_legacy_root__) global described below).
 
 !!! caution
 	In future updates, Roact should _always_ mock the scheduler when in a testing environment and avoid extra configuration. For now, Roact favors explicitness while we shore up the testing experience.

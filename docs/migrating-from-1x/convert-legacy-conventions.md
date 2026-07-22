@@ -199,7 +199,7 @@ end
 ```
 
 !!! info
-	Roact 17 has a compatibility layer that will allow either structure to work as expected. If you'd like to see warnings that will help you migrate, enable the [`__COMPAT_WARNINGS__` global](../configuration.md#compatwarnings).
+	Roact 17 has a compatibility layer that will allow either structure to work as expected. If you'd like to see warnings that will help you migrate, enable the [`__COMPAT_WARNINGS__` global](../configuration.md#__compat_warnings__).
 
 ### React.Fragment
 

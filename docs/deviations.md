@@ -133,7 +133,7 @@ return React.createElement("Frame", nil, {
 })
 ```
 
-In the above example, Roact doesn't know whether you wanted to use "label1" or "Label" as the key, so it falls back to the explicitly provided key ("label1"). In [Dev Mode](configuration.md#dev), it will output an appropriate warning as well.
+In the above example, Roact doesn't know whether you wanted to use "label1" or "Label" as the key, so it falls back to the explicitly provided key ("label1"). In [Dev Mode](configuration.md#__dev__), it will output an appropriate warning as well.
 
 ## Class Components
 Luau does not currently have ES6's `class` semantics. For class components, Roact exposes an `extend` method to provide equivalent behavior.

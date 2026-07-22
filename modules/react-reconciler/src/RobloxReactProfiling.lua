@@ -218,7 +218,8 @@ end
 return {
 	startTimerSampling = startTimerSampling,
 	endTimerSampling = endTimerSampling,
-	profileRootBeforeUnitOfWork = if ReactMicroprofilerLevel >= LEVEL_ROOTS_LOG_ONLY
+	profileRootBeforeUnitOfWork = if ReactMicroprofilerLevel
+			>= LEVEL_ROOTS_LOG_ONLY
 		then profileRootBeforeUnitOfWork
 		else noop,
 	profileRootAfterYielding = if ReactMicroprofilerLevel >= LEVEL_ROOTS_LOG_ONLY
